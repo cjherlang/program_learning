@@ -1,0 +1,17 @@
+git 具有时间性和空间性
+时间性：必须按顺序
+空间性：修改的地方会有相互影响
+
+当两个改变改变的是同一个地方的时候，就会发生冲突
+
+
+reset 是设置我们的头指针
+
+track 远程的分支
+git checkout -b fixbug_xxx --track origin/master  
+git checkout -b fixbug_xxx --track origin/master 
+
+
+git merge 分支 的命令时，首先我们得确保我们所在的分支是最新的，然后git commit以后是不需要再使用git pull --rebase的
+因为merge的节点和原来的是平行的，我们不能把它拿到最上面
+如果使用了这个节点，可能又会有很多冲突，

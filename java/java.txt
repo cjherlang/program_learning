@@ -1,0 +1,115 @@
+interface 
+reflection 反射 动态加载  运行时才确定要使用的类
+SparseArray相当于map
+ArrayList
+
+SparseArray
+一、构造
+从构造方法我们可以看出，它和一般的List一样，可以预先设置容器大小，默认的大小是10：
+[java] view plaincopy
+public SparseArray() {  
+    this(10);  
+}  
+  
+  
+public SparseArray(int initialCapacity) {  
+    ......  
+}  
+
+
+二、增
+它有两个方法可以添加键值对：
+[java] view plaincopy
+public void put(int key, E value)  
+public void append(int key, E value)   
+
+
+
+在存储数据的时候，是采用了二分法方式，以下是它采用二分法的源码：
+[java] view plaincopy
+private static int binarySearch(int[] a, int start, int len, int key) {  
+    int high = start + len;  
+    int low = start - 1;  
+  
+  
+    while (high - low > 1) {  
+        int guess = (high + low) / 2;  
+  
+  
+        if (a[guess] < key) {  
+            low = guess;  
+            continue;  
+        }  
+        high = guess;  
+    }  
+  
+  
+    if (high == start + len)  
+        return start + len ^ 0xFFFFFFFF;  
+    if (a[high] == key) {  
+        return high;  
+    }  
+    return high ^ 0xFFFFFFFF;  
+}  
+
+
+
+所以，它存储的数值都是按键值从小到大的顺序排列好的。
+
+
+三、查
+它有两个方法可以取值：
+[java] view plaincopy
+public E get(int key)  
+public E get(int key, E valueIfKeyNotFound)  
+最后一个从传参的变量名就能看出，传入的是找不到的时候返回的值
+
+
+查看第几个位置的键：
+[java] view plaincopy
+public int keyAt(int index)  
+查看第几个位置的值：
+[java] view plaincopy
+public E valueAt(int index)  
+查看键所在位置，由于采用二分法查找键的位置，所以没有的话返回小于0的数值，而不是返回-1，这点要注意，返回的负数其实是表示它在哪个位置就找不到了，如果你存了5个，查找的键大于5个值的话，返回就是-6：
+[java] view plaincopy
+public int indexOfKey(int key)  
+查看值所在位置，没有的话返回-1：
+[java] view plaincopy
+public int indexOfValue(E value)  
+
+
+四、删
+它有四个方法：
+[java] view plaincopy
+public void delete(int key)  
+public void remove(int key)  
+
+但其实，delete和remove的效果是一样的，remove方法中调用了delete方法，remove源码：
+
+[java] view plaincopy
+public void remove(int key) {  
+        delete(key);  
+    }  
+
+
+[java] view plaincopy
+public void removeAt(int index)  
+public void clear()  
+
+最后一个就是清除全部
+
+
+五、改
+[java] view plaincopy
+public void setValueAt(int index, E value)  
+public void put(int key, E value)  
+
+put方法还可以修改键值对，注意：如果键不存在，就会变为添加新键值对
+
+
+六、其他：
+SparseArray实现了Cloneable接口，还可以调用clone方法。
+
+
+小结：既然android系统建议我们用SparseArray<E>来代替HashMap<Integer, E>，那我们还是按它说的做吧。里面的一些方法，我在这里也已经剖析清楚了，希望能对你们有所帮助。

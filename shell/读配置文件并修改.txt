@@ -1,0 +1,15 @@
+	params=`cat ${SCRIPT_DIR}/${GAME_NAME}/config.txt | grep "params" | cut -d "=" -f 2`
+	if [ -z "$params" ]; then
+		echo "notice!! please set the payment_third_params in config.txt in your game directory"
+	else
+		echo "payment_third_params=$params"
+		line_params=`cat ${PROJECT_ROOT}/assets/game.properties | grep "payment_third_params="`
+		if [ -n "$line_params" ]; then
+			sed -i -e "s/$line_params/payment_third_params=$params/" ${PROJECT_ROOT}/assets/game.properties
+		fi
+		line_params=`cat ${PROJECT_ROOT}/assets/game_debug.properties | grep "payment_third_params="`
+		if [ -n "$line_params" ]; then
+			sed -i -e "s/$line_params/payment_third_params=$params/" ${PROJECT_ROOT}/assets/game_debug.properties
+		fi
+	fi
+	

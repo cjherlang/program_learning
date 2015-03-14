@@ -1,0 +1,7 @@
+eclipse
+android=?是在他的属性中选择的
+
+unknown source  一定是缺少资源
+link error一定是连接错误
+link error ：： findlibrary return null  很有可能就是本地库找不到，如.so
+在eclipse log中有native说明是一定有本地库的，一定要注意加入

@@ -1,0 +1,2 @@
+例如：jarsigner -verbose -keystore F:\robo\mykey.keystore -storepass 123456 -signedjar F:\robo\projects\Test\bin\Test.apk F:\robo\projects\Test\bin\ActivityTest-release-unsigned.apk mykey.keystore 
+该方式用来为apk重新签名

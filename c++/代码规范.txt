@@ -1,0 +1,54 @@
+const int 比int const可读性更好
+
+变量名：
+前缀+单词，单词首字母大写
+对于cocos2d-x的类型变量名，取消类型前缀，用最后一个单词来表明类型，如：
+CCLabelTTF *m_pNickNameLabel
+如有其他类型未出现在上述列表里，使用小写非缩写的类型名作为前缀
+m_	类的成员变量（member）
+sm_	类的静态成员变量（static member）
+s_	静态变量（static）
+g_	外部全局变量（global）
+sg_	静态全局变量（static global）
+gg_	进程或动态链接库间共享的全局变量（global global）
+
+sz	以0结尾的字符串(char *)
+str	string字符串(std::string)
+map	std::map
+v	std::vector
+arr	数组（array）
+p	指针型变量和迭代子（pointer）
+
+常量名
+#define宏定义的所有常量单词字母大写，单词之间必须用下划线隔开，不允许出现非全球通用的缩写。
+Enum定义的常量，遵循cocos2d-x的命名规范，以k为前缀的匈牙利命名法，每个单词首字母大写即可。
+其他const等方法定义的常量，同上一条。
+
+
+类名或者结构体名：
+首字母大写，后缀必须说明父类，继承了精灵的类，名字最后一个单词需要是Sprite，
+继承了CCNode，则最后一个单词必须是Node，继承了CClayer最后一个单词要是Layer，以此类推。
+
+
+函数名：
+doSomething的形式，首字母小写，其他单词首字母大写
+protected：加_
+private:加__
+全局或者静态：首字母大写
+
+
+
+继承除第一个基类不做限制，从第二个往后必须只能是接口。不允许继承多个非接口类，即使是继承接口，也不宜过多。如果一定要继承多个可实例化类，使用组合，或修改自己的设计。
+继承的写法如下：
+    class LocalClickSprite
+        : public cocos2d::CCSprite
+        , public cocos2d::CCTargetedTouchDelegate
+    {
+	    ……
+
+
+switch
+对于switch，case语句不缩进。
+Case里面的代码块必须用花括号包围起来（这不仅仅是风格问题了，还涉及到变量作用域），并且缩进四个空格。
+break写在花括号外面，这样更容易看出该break是用来退出case而不是什么for循环的。
+必须要有default语句，你可以break，也可以assert

@@ -1,0 +1,2 @@
+git cherry-pick后一般要删了changeid否则push不上去，因为存在了相同的id
+git stash  是保存当前工作区到一个缓冲区中，和任何分支没有关系，可以在任意一个分支上apply

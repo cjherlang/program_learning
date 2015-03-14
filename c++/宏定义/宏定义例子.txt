@@ -1,0 +1,123 @@
+#ifndef _enumhelper_
+#define _enumhelper_
+
+#include <stdlib.h>
+
+
+struct EnumItem
+{
+	unsigned int value;
+	const char *key;
+	const char *name;
+	unsigned int extraValue;
+};
+
+#define ENUM_ITEM(v)			{ v, #v, #v, 0}
+#define ENUM_ITEM_TEXT(v, k, t)	{ v, k, t, 0}
+#define ENUM_ITEM_TEXT_EX(v, k, t, m)	{ v, k, t, m}
+
+#define DECL_ENUM_HELPER(enumName)	const char * Get##enumName##Name(const enumName value); \
+const char * Get##enumName##Key(const enumName value); \
+enumName Get##enumName##ValueByKey(const char * key); \
+enumName Get##enumName##ValueByName(const char * name); \
+unsigned int Get##enumName##ExtraValue(const enumName value); \
+unsigned int Get##enumName##ExtraValueByKey(const char * key)
+
+#define BEGIN_ENUM_HELPER(enumName) const EnumItem g##enumName##Array[] = {
+
+#define END_ENUM_HELPER(enumName)  }; \
+\
+const char * Get##enumName##Name(const enumName value) \
+{\
+	const static int size = sizeof(g##enumName##Array)/sizeof(g##enumName##Array[0]); \
+	for (int i = 0; i < size; ++ i) \
+	{ \
+		if (value == g##enumName##Array[i].value) \
+		{ \
+			return g##enumName##Array[i].name; \
+		} \
+	} \
+\
+	static char buf[10] = { 0 }; \
+	memset(buf, sizeof(char), 10); \
+	snprintf(buf, 10, "%d", value); \
+	return buf; \
+}\
+\
+const char * Get##enumName##Key(const enumName value) \
+{\
+	const static int size = sizeof(g##enumName##Array)/sizeof(g##enumName##Array[0]); \
+	for (int i = 0; i < size; ++ i) \
+	{ \
+		if (value == g##enumName##Array[i].value) \
+		{ \
+			return g##enumName##Array[i].key; \
+		} \
+	} \
+	\
+	static char buf[10] = { 0 }; \
+	memset(buf, sizeof(char), 10); \
+	snprintf(buf, 10, "%d", value); \
+	return buf; \
+} \
+\
+enumName Get##enumName##ValueByKey(const char * key) \
+{\
+	if (!key) \
+		return (enumName)0; \
+	const static int size = sizeof(g##enumName##Array)/sizeof(g##enumName##Array[0]); \
+	for (int i = 0; i < size; ++ i) \
+	{ \
+		if (!strcmp(key, g##enumName##Array[i].key)) \
+		{ \
+			return (enumName)g##enumName##Array[i].value; \
+		} \
+	} \
+	return (enumName)0; \
+} \
+\
+enumName Get##enumName##ValueByName(const char * name) \
+{\
+	if (!name) \
+		return (enumName)0; \
+	const static int size = sizeof(g##enumName##Array)/sizeof(g##enumName##Array[0]); \
+	for (int i = 0; i < size; ++ i) \
+	{ \
+		if (!strcmp(name, g##enumName##Array[i].name)) \
+		{ \
+			return (enumName)g##enumName##Array[i].value; \
+		} \
+	} \
+	return (enumName)0; \
+} \
+\
+unsigned int Get##enumName##ExtraValue(const enumName value) \
+{\
+	const static int size = sizeof(g##enumName##Array)/sizeof(g##enumName##Array[0]); \
+	for (int i = 0; i < size; ++ i) \
+	{ \
+		if (value == g##enumName##Array[i].value) \
+		{ \
+			return g##enumName##Array[i].extraValue; \
+		} \
+	} \
+	\
+	return 0; \
+} \
+\
+unsigned int Get##enumName##ExtraValueByKey(const char * key) \
+{\
+	if (!key) \
+		return (enumName)0; \
+	const static int size = sizeof(g##enumName##Array)/sizeof(g##enumName##Array[0]); \
+	for (int i = 0; i < size; ++ i) \
+	{ \
+		if (!strcmp(key, g##enumName##Array[i].key)) \
+		{ \
+			return g##enumName##Array[i].extraValue; \
+		} \
+	} \
+	return 0; \
+}
+
+#endif

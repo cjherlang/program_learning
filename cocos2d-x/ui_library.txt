@@ -1,0 +1,3 @@
+cocos2d_ui
+dialog的onClickedOutside存在点击外部不dismiss的情况，可能是dialog会把里面的面积变大
+而popuplayer是完全有效的

@@ -1,0 +1,23 @@
+
+屏幕适配的本质就是：选取几个几个基准点来进行靠近，比如中心，原点，边界，可看见的点
+
+直接加在屏幕上的才需要适配，不是直接加在屏幕上的就不需要适配
+已经适配过的，就是已经调整过的了，再进行调整就会出错，即只需要一次适配，即使取得它的位置，再去设置它的位置也不再需要再适配
+
+
+design size 开始设计的大小
+FrameSize 是实际的屏幕分辨率
+winsize:DesignResolutionSize（放大后的size）
+visibleSize:VisibleSize 在winsize中，随WinSize 的大小改变而改变，它标示 在设
+计分辨率（WinSize）下，在屏幕中的可见区域大小
+黑色边框标示实际的屏幕分辨率，紫色区域标示游戏设计大小，而通过放大缩小，保持宽高比固定， 可以看到 Show All 之中
+的黑色阴影部分为留边，而 No Border 的紫色阴影部分则不能显示，而这紫色区域的大小是游戏设计之时是不可控的。那么原
+设计的画面大小就失去了 一定的 参考价值了，因为这可能让你的画面显示残缺。这时仅仅通过 WinSize 满足不了我们的设计
+需求，所以引入了 VisibleSize 与 VisibleOrigin 概念。
+
+// WinSize VisibleSize VisibleOrigin 与都设计的分辨率相关，满足如下关系
+WinSize.width = (VisibleOrigin.x * 2) + VisibleSize.width
+WinSize.height = (VisibleOrigin.y * 2) + VisibleSize.height
+
+
+第一次setposition的时候用了适配，那么后面getposition得到的都是适配以后的位置，我们用这个set的时候就不再需要适配

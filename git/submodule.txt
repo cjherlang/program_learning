@@ -1,0 +1,15 @@
+submodule 就是  连接 + 内容
+
+
+
+对于某些使用submodule 管理的项目， 经常会发现某些submodule 被切换到某个奇怪的分支。  是因为git submodule update 会把submodule checkout到临时branch。
+
+所以建议大家同步时使用  “git submodule foreach git pull --rebase”
+
+git submodule 实际上 是指向 子工程的链接 （链接信息包含了具体某个branch 的某个commit） 
+
+1）	如果是主工程先更新了链接信息， 那么 git submodule foreach git pull –rebase  就会更新 子工程。
+2）	如果是子工程先更新， 那么需要到子工程目录下 git pull –rebase,   然后回到主工程， 主工程里会显示子工程里有new commits（相当于链接信息被更新了）.  
+
+
+在submodule下提交，在.git文件夹下，要把hooks下面的commit-message复制到module下面的相应的工程中去这样才能提交

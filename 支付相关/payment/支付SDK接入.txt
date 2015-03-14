@@ -1,0 +1,39 @@
+就是加入依赖关系和进行代码调用，
+依赖关系，可以用配置文件来实现，依赖哪一个
+代码调用可以用反射来实现，有就调用，没有就不调用
+
+加入支付枚举值：
+shopDef.h   shopDef.cpp
+
+集成第三方登录和支付：
+1、资源加入
+main project：	Anrooidmanifest  权限，activity
+		game.properties
+
+		assets
+		proguard.txt
+
+
+payment project(用于支付)：加入依赖工程（或者依赖库）
+
+2、代码加入
+初始化：
+调用：
+回调：
+
+
+
+新框架：简单直接，调用和回调没有那么复杂，接口齐全并且统一，相同的尽量放在了一起,要修改的东西都很方便
+
+
+对比DEMO一点一点看，资源，初始化，调用，回调，要注意字符的长度，数据的类型
+自定义字符串一般可用appname（Apputils.getAppName）
+android项目在manifest中修改包名后可以从gen中复制R.java和build.config过去，把build.config中的build type 变为release
+
+调试编译能在eclipse中看见log，BUILD_TYPE = 
+
+一般可能出现的错误：初始化错误，资源遗漏，参数不对，
+
+依赖于工程，导入要把依赖的工程的私有库设为共享
+
+注意:短信支付包括了移动，联通，电信三种，可能有时指定只能用一种

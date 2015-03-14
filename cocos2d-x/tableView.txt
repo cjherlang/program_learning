@@ -1,0 +1,38 @@
+tableView:
+    virtual unsigned int numberOfCellsInTableView(cocos2d::extension::CCTableView *table);
+    virtual cocos2d::CCSize tableCellSizeForIndex(cocos2d::extension::CCTableView* table, unsigned int idx);
+    virtual cocos2d::extension::CCTableViewCell* tableCellAtIndex(cocos2d::extension::CCTableView *table, unsigned int idx);
+
+    创建的时候会根据numberOfCellsInTableView取得TableView中Item的个数
+    然后根据tableCellSizeForIndex取得各个Item（可看做逻辑上的一项）的位置和大小
+
+    然后根据tableCellAtIndex去创建它的内容
+
+复用即意味着统一
+
+    其中cell是复用的，不在展示区的会移到m_pCellsFreed中，等待使用，
+    当我们需要用到一个cell的时候，我们就会去里面拿，有就复用，没有
+    我们就会去创建一个然后进行使用
+    即：tableView是对cell进行不断复用的
+
+    idx:，是唯一标识每一个item的，
+    而cell是复用的,item可能用到cell中的任意一个，即多个idx可能都使用了同一个idx
+    (idx是根据位置计算出来的)
+
+    对tableView来说，每个cell都是一样的，它是复用的，谁要用就用
+    对具体的每一个item来说，它可能用到其中的任意一个cell
+    所以对tableView来说，如果我们要复用cell里面的内容，那么我们就必须把
+    cell做成一样的，然后我们在tableCellAtIndex中的update中进行控制
+
+    tableView中的cell的大小也是动态的，reload的时候会根据item在一开始的
+    时候取得的大小去设置cell的大小
+    
+    create中会设置它的dataSource和delegate，以及调用上面的三个接口进行绘制
+    reload中也会调用上面的三个接口进行重新绘制
+
+    调用上面三个接口，本质上都是调用到了下面两个函数：
+    this->_updateCellPositions();
+    this->_updateContentSize()
+
+
+

@@ -1,0 +1,15 @@
+Fatal signal 11 (SIGSEGV) 
+一般为jni部分出错，可以通过这个来查看调用.so的调用栈
+
+当我们将应用部署到手机上进行真机测试时，有时会发生crash，但是在真机上运行是看不到出错信息的，最多只有fatal的提示。为了解决这个问题，我们可以使用sdk里面的adb命令。
+ 
+1、在使用这个命令之前，我们要把sdk目录下的tools文件夹加入环境变量%ANDROID_NDK_HOME%/，在命令行中输入adb回车可以检查环境变量是否设置好了。
+2、找一个文件夹，新建一个txt文件，将%ANDROID_NDK_HOME%/ndk-stack -sym . -dump "%1"保存进去，修改扩展名为bat，保存。
+3、OK，接下来在运行build_native.sh的时候在后面添加-D参数，这样就能生成debug版的so文件。
+4、把你怀疑有问题的so文件放在上面提到的bat文件所在的文件夹。so文件可以在项目文件夹下的proj.android/libs/armeabi/下找到。
+5、准备工作都完成了，接下来可以开始捕获crash信息了。在命令行中进入上述bat所在的文件夹，然后输入命令adb logcat -> log.txt ，txt的名字随便取，这条命令是把catlog里面的信息导入
+   到log.txt中。之后命令行会进入等待状态，接下来在eclipse中运行编好的debug版代码，crash发生之后，在命令行输入ctrl+z终止导入crash信息，然后输入name.bat log.txt命令，这里
+   的bat就是上面创建的bat文件。这条命令会把log信息中标示崩溃的地方截取出来，方便我们定位log信息的关键位置。
+ 
+注：我目前遇到的pc运行正常、真机crash的原因为使用ccuserdefault时调用getIntForKey方法出错（可能是android系统与pc系统的int位数有关），资源文件加载出错（主要是文件不存在，虽
+然没有用到，但是android还是会检查文件是否存在；win下的资源路径大小写均可，但是android下的资源路径必须）。（如果大家有遇到其他原因导致真机crash的请及时分享，这种crash确实是十分头疼的。）

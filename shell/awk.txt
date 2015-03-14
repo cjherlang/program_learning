@@ -1,0 +1,8 @@
+awk '{pattern + action}' {filenames}
+
+awk -v -f 'BEGIN{};END{}'
+awk也就相当于一个shell脚本，可以传递一些参数，可以在它之前进行一些处理，在它之后进行一些处理
+-v传递变量
+-f传递分隔符，默认为空字符串
+
+''表示这是一个代码段

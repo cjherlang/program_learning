@@ -1,0 +1,2 @@
+itemid 用于第三方的商品id
+productid可能出了itemid外还包含其他的信息，如电话号码

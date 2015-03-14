@@ -1,0 +1,26 @@
+Java中interface接口与abstract class抽象类的区别 interface和abstract class是Java中实现多态的基础，都很有用，但也有一些区别： 
+interface被继承时用的关键字是implements，而且可以同时implements多个interface，而abstract class被继承时用的关键字是extends，而且只能同时extends一个abstract class。 
+interface内定义的方法都是public的，而abstract class内的则不一定。 
+interface内定义的成员对象都是static & final的，而abstract class不是 
+interface的方法不能有默认实现，只有一个申明，而abstract class内申明abstract的方法不能有实现，非申明abstract的方法可以有默认实现。 
+interface被implements时，所有方法都必须被实现，必须申明是public的，而abstract class被extends时只有abstract的方法才必须被实现，别的有默认实现的直接被继承过来。 
+
+例子： 
+public interface Instrument { 
+    int i = 5; //static & final 
+    //can't have method definitions: 
+    void play(); //automatically public 
+    void adjust(); 
+} 
+
+public abstract class AbstractCachedTable { 
+    public Hashtable table = new Hashtable(); 
+    abstract public void refresh(); 
+    public Object get(Object o) { 
+        Object target = null; 
+        target = table.get(o); 
+        return target; 
+    } 
+} 
+
+一般情况下，建议使用interface（因为能同时implements多个interface的特性，能更好地实现多态），当需要有默认实现和成员对象时才考虑abstract class。 

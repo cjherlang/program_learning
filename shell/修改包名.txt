@@ -1,0 +1,30 @@
+#change package name
+	package_name=`cat ${SCRIPT_DIR}/${GAME_NAME}/config.txt | grep "package" | cut -d "=" -f 2`
+	echo "package_name=$package_name"
+	if [ -z "$package_name" ]; then
+		echo "notice!!please add 91 to your package name"
+	else
+		last_package=`cat ${PROJECT_ROOT}/AndroidManifest.xml | grep "package" | cut -d "\"" -f 2`
+		last_folder=${last_package//"."/"/"}
+		last_folder=${SRC_PATH}/${last_folder}
+		#echo "last package folder is :${last_folder}"
+		rm -rf temp
+		mkdir temp
+		mv -f ${last_folder}/* temp
+		rm -rf ${last_folder}
+		new_folder=${package_name//"."/"/"}
+		new_folder=${SRC_PATH}/${new_folder}
+		mkdir -p ${new_folder}
+		mv -f temp/* ${new_folder}
+		rm -rf temp
+		sed -i -e "s/$last_package/$package_name/g" "${PROJECT_ROOT}/AndroidManifest.xml"
+		for file in ${new_folder}/*
+			do
+			if [ "$file" ]; then
+				sed -i -e "s/${last_package}/${package_name}/" "$file"
+			fi
+		done
+	fi
+
+
+	利用android  tool修改，看它改了什么我们修改什么

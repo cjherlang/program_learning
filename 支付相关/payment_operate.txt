@@ -1,0 +1,22 @@
+ ./setup_config.sh ../../../game_client/proj.android/ add dpay
+android_hg_ysz   android其他的版本标志符
+使用小米的时候一定要注意改包名和item_filter，加入和删除都记得改，
+game_debug.properties和game.properties都是用来设置debug和release的，一个是debug版一个是release版，是根据buildconfig来定的，它是在java下的所以要修改java的build_config
+
+线上服务器：
+game.server=gs2.starfieldgame.com
+game.port=7011
+
+
+notify_id 是用来区分不同的游戏,不同的回调地址是用来统计不同游戏的收入，和common server 通知游戏服务器无关，common  server通知game  server 是谁让它创建，它就通知到哪个game  server
+
+
+property是过滤了两遍的，一遍是由版本game_filter，一遍是由渠道provider
+
+服务器上保存了所有的provider的计费点（扣费点），每次启动，客户端上传其相应的provider，请求相应的计费点，然后服务器下发客户端保存下来，当点击购买一个商品时，客户端会遍历所有的provider
+显示出能购买它的provider
+
+支付常见问题：
+没有初始化成功
+资源没有加入完全
+参数不对，类型长度
