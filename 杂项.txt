@@ -1,0 +1,5 @@
+permission deny 一般是权限相关 可以用takeown来设置，takeown /f* /r ,也可以再属性，安全中进行添加用户和编辑权限
+
+环境变量，环境的变量，所有程序公用的变量，对所有程序而言，它也成为了一个关键字
+比如：NDK_ROOT, ant ， apktool
+
