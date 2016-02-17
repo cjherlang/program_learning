@@ -1,1 +1,5 @@
 jarsigner -verbose -keystore boyaa.texas.keystore -signedjar texas_huawei_331_sign.apk texas_huawei_331.apk "boyaa texas"
+
+jarsigner -verbose -keystore bgame.keystore -signedjar unsign.apk unsign.apk "bgame"
+														(签名的包) （未签名的包）
+pass:bainainfogame

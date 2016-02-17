@@ -1,0 +1,1 @@
+如果一次色图setposition完全没有作用，怎么设置都不行，那么说明它后面肯定还有一次setposition

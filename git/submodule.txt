@@ -13,3 +13,10 @@ git submodule 实际上 是指向 子工程的链接 （链接信息包含了具体某个branch 的某个co
 
 
 在submodule下提交，在.git文件夹下，要把hooks下面的commit-message复制到module下面的相应的工程中去这样才能提交
+
+删除
+No submodule mapping found in .gitmodules for path and missing
+git rm --cached <path_to_submodule>.
+
+添加
+git submodule add ssh://jhchen@game-git.baina.com:29418/cocos2dx_baina_proj

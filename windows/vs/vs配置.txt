@@ -1,0 +1,31 @@
+vs配置
+基本配置：
+输出目录：Output Directory, 生成文件的输出目录，比如lib，dll，exe等
+中间目录：intermediate Directory，中间文件的输出目录，obj等文件
+生成类型：Configuration Type，可以设置生成的类型，lib，dll，exe
+工作目录：Working Directory，所用到的资源的目录
+传入参数：Command Arguments，可供传入程序的参数
+可以用macros来查看vs中各个变量的值
+
+
+编译连接配置：解决一些依赖问题
+编译：宏定义 C++ -> Preprocessor
+	  头文件include General -> Additional Include Directories
+	  编译警告级别控制:SDL checks(false为不检查), Warning Level
+	  Code Generation: runtime library -> 可以控制运行时使用什么，也是debug和release版本区别较大的地方，MT不需要依赖dll
+
+连接：所依赖的库文件名称，以及库文件路径 Linker
+Input: Additional Dependencies 说明所依赖的库
+Geneal：Additional Library Directories 说明依赖库的位置
+
+
+build事件（编译连接中的事件）：Build Event, 可以复制一些所依赖的资源,可以选择build前，连接前，build后进行
+if not exist "$(SolutionDir)$(Configuration).win32" mkdir "$(SolutionDir)$(Configuration).win32"
+xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\cocos2dx\platform\third_party\win32\libraries\*.*" "$(SolutionDir)$(Configuration).win32\"
+xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\libwebsockets\win32\lib\*.*" "$(SolutionDir)$(Configuration).win32\"
+
+静态库和动态库
+静态库（lib，.a）：编译时连接，不需要放入所在目录
+动态库(dll,.so)：运行时连接，运行时才连接，所以必须放入所在目录，一般用拷贝的形式放进去(可用build event放进去)
+
+如果是用VS2013产生的exe，需要用到msvcp120.dll msvcr120.dll可以用build event复制进去

@@ -8,6 +8,8 @@ tableView:
 
     然后根据tableCellAtIndex去创建它的内容
 
+	reload会重新设置cell的大小和cell中的内容
+	
 复用即意味着统一
 
     其中cell是复用的，不在展示区的会移到m_pCellsFreed中，等待使用，
@@ -35,4 +37,11 @@ tableView:
     this->_updateContentSize()
 
 
+位置调整：
+TableView的大小，位置
 
+cell的大小，位置
+
+cell里面的元素的大小，位置
+
+可以用setViewSize()来控制tableview的大小

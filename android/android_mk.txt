@@ -1,0 +1,2 @@
+ Are you sure your NDK_MODULE_PATH variable is properly defined ? 
+ moudle的路径错误，无法找到，ndk-build 的时候，NDK_MODULE_PATH路径下不存在我们引入的moudle

@@ -1,0 +1,10 @@
+command + n 打开finder
+command + w 关闭finder
+command + m 最小化一个finder
+
+command + tab 程序之间进行切换，而不是进程
+
+ios是基于程序的进行操作，选中一个，就可以对相应的一类进行操作
+
+cammand + spaces输入法切换
+

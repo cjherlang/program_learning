@@ -1,0 +1,18 @@
+
+
+方法的签名，也就是对方法的描述，参数，返回值
+
+jni其实就是一个通道，连接c++和Java
+负责c++和Java的相互调用，变量传递
+调用：声明与实现
+Java    ->   c++
+native      jniexport jnicall ：1、提前注册进去（jni中），2、用命名规则
+
+c++    ->    java
+取得JNIENV,再取得相应的class，相应的methodId（类，方法，方法签名），然后call
+
+
+Jni神器
+javap -s class-full-name(such as java.util.Object),会返回这个类所有方法的signature。
+
+在jni中声明的变量用完一定要删掉，否则会造成内存泄露，程序崩溃

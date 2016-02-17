@@ -1,0 +1,8 @@
+编译so中
+进行源码所在目录，如ndk包中所带示例
+cd $NDK_ROOT/samples/hello-jni
+然后执行
+$NDK_ROOT/ndk-build
+或者在任一目录执行
+$NDK_ROOT/ndk-build -C $NDK_ROOT/samples/hello-jni.
+此时即可在hello-jni/libs/armeabi/目录下产生so库

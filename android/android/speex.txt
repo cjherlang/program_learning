@@ -1,0 +1,39 @@
+初始化（初始化一些参数）:编码和解码都需要初始化，而且它们的初始化的差不多
+编码初始化
+Speex比特包结构体SpeexBits ebits（字符数组，保存编码后的数据）：speex_bits_init( &bits ); 
+Speex编码器状态void *enc_state（编码方式，窄带编码还是宽带编码，对应每一帧的宽度不同）：enc_state = speex_encoder_init( &speex_nb_mode );
+每一帧的大小int enc_frame_size：speex_encoder_ctl( enc_state, SPEEX_GET_FRAME_SIZE, &frame_size );
+设置编码质量传入quality（0-10）：speex_encoder_ctl( enc_state, SPEEX_SET_QUALITY, &quality );
+
+解码初始化：
+Speex比特包结构体SpeexBits ebits（字符数组，保存编码后的数据）：speex_bits_init( &bits ); 
+Speex编码器状态void *dec_state （编码方式，窄带编码还是宽带编码，对应每一帧的宽度不同）：dec_state  = speex_decoder_init( &speex_nb_mode );
+每一帧的大小int dec_frame_size：speex_decoder_ctl( dec_state, SPEEX_GET_FRAME_SIZE, &frame_size );;
+设置编码质量传入quality（0-10）：speex_encoder_ctl( enc_state, SPEEX_SET_QUALITY, &quality );
+
+编码（对每一帧进行操作，一帧一帧的进行编码）
+重置Speex比特包结构体：speex_bits_reset( &bits );
+编码并保存进Speex比特包结构体：speex_encode_int( enc_state, input_frame, &bits ); //参数：编码状态，要编码的帧，Speex比特包结构体
+从Speex比特包结构体写入目标数组中：nbBytes = speex_bits_write( &bits, byte_ptr, MAX_NB_BYTES ); //Speex比特包结构体， 目标数组，大小
+输入：要编码的帧
+输出：编码后的数组
+
+
+解码（对每一帧进行操作，一帧一帧的进行解码）
+从输入数组中读取到Speex比特包结构体中，speex_bits_read_from( &bits, input_bytes, nbBytes ); //Speex比特包结构体， 编码数组，数组大小
+从Speex比特包结构体中的数据解码到输出数组中：speex_decode_int( dec_state, &bits, output_frame ); //编码状态， Speex比特包结构体， 输出数组
+
+输入：编码后的文件
+输出：解码后的音频数组
+
+
+结束
+完成编码后，释放所有资源：
+speex_bits_destroy( &bits );
+speex_encoder_destroy( enc_state );
+
+
+speex 是一帧一帧进行处理的，编码的时候要一帧一帧的，解码的时候也要一帧一帧的
+所以我们要用一个循环来对音频一帧一帧的编解码
+
+编码的时候可以一帧一帧的，但解码怎么知道它有多少帧呢

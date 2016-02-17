@@ -1,0 +1,41 @@
+im: instance message
+
+android:
+录音：
+	int bufferRead = 0;
+
+	int bufferSize = AudioRecord.getMinBufferSize(frequency, AudioFormat.CHANNEL_IN_MONO, audioEncoding);
+
+	short[] tempBuffer = new short[packagesize];
+
+												//频源，频率， 声道， 编码， 缓冲区大小
+	AudioRecord recordInstance = new AudioRecord(MediaRecorder.AudioSource.MIC, frequency, AudioFormat.CHANNEL_IN_MONO, audioEncoding,
+			bufferSize);
+
+	recordInstance.startRecording();
+
+	bufferRead = recordInstance.read(tempBuffer, 0, packagesize); //返回录入的大小
+	
+停止录音：
+recordInstance.stop();
+	
+利用AudioRecord来进行录音
+1.始化AudioRecord
+2.start开始录制，并且异步把录音数据写入到数组中，然后我们可以再写入文件中去
+
+输出一个数组
+
+
+录音播放
+AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
+				minBufferSize, AudioTrack.MODE_STREAM);
+track.write(audio, 0, audioLength); //数组，起始地址，长度
+track.play();
+
+1.初始化AudioTrack
+2.将数据写入缓冲区后，开始播放
+
+输入一个数组
+
+
+音频的数据可以先存放在文件中，再从文件中读取出来，因为我们会不断去读写一个数组，不知道什么时候写完

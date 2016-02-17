@@ -72,7 +72,7 @@ fi
 COPY_FILE()
 {
     local current_path=`pwd`
-    cd $ROOT_PATH/$PROJECT_NAME/$PROJ_ANROID_PATH
+    cd $ROOT_PATH/$PROJECT_NAME/$PROJ_ANDROID_PATH
     local ip_value=`cat assets/game.properties | grep "game.server" | cut -d "=" -f 2`
     echo "ip_value is $ip_value"
     local port_value=`cat assets/game.properties | grep "game.port" | cut -d "=" -f 2`
@@ -159,7 +159,7 @@ BUILD_RELEASE()
     fi
 	
     echo "ant clean"
-    cd proj.android
+    cd game_majiang_client/proj.android
     ant clean
     
     if [ -d "../dist" ];then
@@ -414,6 +414,9 @@ LINE_NUMBER=`wc -l "file_para/temp_param.txt"`
 TEMP_CONTENT_FOR_LINE=($LINE_NUMBER)
 LINE_NUMBER=${TEMP_CONTENT_FOR_LINE[0]}
 echo "LINE_NUMBER=$LINE_NUMBER"
+if [ -z "$LINE_NUMBER" ]; then
+    echo "now the config line in .txt is empty"
+fi
 for (( i = 1; i <= LINE_NUMBER; i++));do
     LINE_CONTENT=`sed -n ${i}p "file_para/temp_param.txt"`
     if [ $FLAG = 1 ]; then

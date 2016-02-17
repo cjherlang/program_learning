@@ -1,0 +1,64 @@
+src: 源文件，逻辑部分
+res：UI文件，需要布局渲染的ui，会生成一个id（R.java中），代码中用这个id来使用这个资源文件
+assets：资源文件（MP3。。。） 不需要布局渲染的资源文件，在代码中直接使用
+gen：编译生成的一些文件
+lib：所依赖的一些库，根据不同的平台存放不同的lib，arm，arm7, x86
+
+AndroidManifest: 对整个程序的基本描述，对程序及各个组件（activity，service等）进行描述
+
+res：UI布局学习，只要是以Android：开头的，都是Android系统中定义的属性，都能查得到
+src：基本组件学习，Java学习
+Androidmanifest：程序描述学习
+
+res：UI布局学习
+文件夹只是用来组织文件的，不能说明资源对象的类型
+资源对象的类型是根据它的声明来决定的，它声明为什么资源对象，它就是什么资源类型
+res/anim/ 动画
+res/drawable/ 图片, 或图片列表（drawable中用xml定义一组图片（.xml）,在不同的情况下使用不同的图片。（在相应的地方使用这个xml就行,常用于图片ImageView，按钮button））
+res/color/ 颜色
+res/layout/ 布局 有不同类型的layout
+res/values/ 常量值：string， style， theme, dim(尺寸)
+
+style：
+风格，样式，用于控件
+一组UI属性的集合，便于复用，可继承（设置parent）
+theme：
+主题，用于activity，界面
+（和style一样，是一组UI属性的集合）
+separate the design from the content.
+
+wrap_content – The component just want to display big enough to enclose its content only. 包围内容
+fill_parent – The component want to display as big as its parent, and fill in the remaining spaces. (renamed match_parent in API Level 8) 填满父节点
+
+
+
+
+
+src：基本组件学习，Java学习
+Androidmanifest：程序描述学习
+
+R文件引用报错，很可能是R.java错了，要删了它的import.android.R
+
+application:
+Android的Application同Activity和Service一样都是Android框架的组成部分。这个Application通常在app启动的时候就会自动创建。Application在app中是一个单例模式，而且Application也是整个app生命周期最长的对象。
+所有的Activity和Service都是共用着一个Application，所以Application通常用来共享数据，数据传递和数据缓存。
+整个应用的一个上下文
+Android会先运行application再运行activity，application运行的时间，就是从启动到运行第一个activity的时间，要尽可能的短，否则就会有明显的黑屏
+
+drawable:
+<?xml version="1.0" encoding="utf-8"?>
+
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">  
+  <item android:maxLevel="1" android:drawable="@drawable/rc_hands_free_disable" />  
+  <item android:maxLevel="2" android:drawable="@drawable/rc_hands_free" />  
+  <item android:maxLevel="3" android:drawable="@drawable/rc_hands_free_down" />  
+</level-list>  
+
+<ImageView
+                android:id="@+id/hands_off_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/rc_btn_hands_free_selector" />
+代码中就可以用level来设置不同的图片
+
